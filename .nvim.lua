@@ -23,7 +23,11 @@ obsidian.setup({
           alias_format = "%B %-d, %Y",
           default_tags = { "daily-notes" },
           template = "Templates/Daily to-do.md",
-          folder = "Daily_Notes", -- base folder; actual month subfolder via note_path_func below
+          folder = (function(date)
+            local d = os.date("*t", date)
+            local month_year = string.format("%02d-%d", d.month, d.year)
+            return "Daily_Notes/" .. month_year
+          end)(),
           workdays_only = true,
         },
         templates = {
